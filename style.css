@@ -4,6 +4,13 @@ body {
 	background-color: #f0f4f8; /* Light gray background for the entire page */
 	min-height: 100vh; /* Ensure body takes full viewport height */
 	margin: 0; /* Remove default body margin */
+	/* Keeping user's original body flex and padding for desktop, overriding for mobile if needed */
+	display: flex; /* User's inline style */
+	justify-content: center; /* User's inline style */
+	align-items: center; /* User's inline style */
+	padding: 20px; /* User's inline style */
+	box-sizing: border-box; /* User's inline style */
+	/* The 'background: cover;' was an invalid property and is removed */
 }
 
 /* Keyframe animation for fade-in effect */
@@ -23,6 +30,7 @@ body {
 }
 
 /* Member Image Cluster Styles */
+/* These styles are less critical as inline styles will override them, but serve as defaults */
 .member-images-cluster {
 	position: relative;
 	width: 120px; /* Default width for the cluster container */
@@ -40,7 +48,7 @@ body {
 	border: 2px solid white;
 }
 
-/* Overlapping order and position for member images */
+/* Overlapping order and position for member images (default for larger screens) */
 .member-images-cluster .member-thumbnail:nth-child(1) {
 	/* Sukanta.jpg */
 	right: 60px; /* Adjust for overlap */
@@ -59,7 +67,7 @@ body {
 	z-index: 3;
 }
 
-/* Creator Info Styles */
+/* Creator Info Styles (default for larger screens) */
 .creator-info {
 	position: fixed;
 	bottom: 0;
@@ -85,10 +93,20 @@ body {
 
 /* Extra Small screens (e.g., small mobile phones, < 640px) */
 @media (max-width: 639px) {
+	/* To make the body background fill the screen on mobile */
+	body {
+		display: block; /* Override flex to allow content to flow naturally */
+		padding: 0; /* Remove padding */
+		justify-content: initial; /* Reset */
+		align-items: initial; /* Reset */
+	}
+
 	.poster-container {
 		padding: 1rem; /* Reduced padding for smaller screens */
 		margin-top: 1rem;
 		margin-bottom: 1rem;
+		width: 95%; /* Make poster take more width */
+		max-width: none; /* Remove max-width constraints on mobile */
 	}
 
 	.icon-section img {
@@ -96,28 +114,61 @@ body {
 		height: 4rem;
 	}
 
-	.member-images-cluster {
-		width: 90px; /* Make image cluster container smaller */
-		height: 40px;
+	/* Target the container for member images and button in the footer */
+	/* This targets the div with specific inline styles in your HTML */
+	.Members > div[style*="position: relative"][style*="margin-left: auto"] {
+		width: 100% !important; /* Force full width on mobile */
+		height: auto !important; /* Adjust height automatically */
+		margin-left: 0 !important; /* Reset margin */
+		margin-right: 0 !important; /* Reset margin */
+		display: flex; /* Use flex to arrange items */
+		flex-direction: column; /* Stack button and images */
+		align-items: center; /* Center horizontally */
+		padding-top: 1rem; /* Add some space above */
+		position: static !important; /* Remove absolute positioning */
 	}
 
-	.member-images-cluster .member-thumbnail {
-		width: 2.5rem; /* Smaller member images */
-		height: 2.5rem;
+	/* Target the member images within that specific container */
+	/* Overriding problematic inline 'right' values */
+	.Members > div[style*="position: relative"] img {
+		position: static !important; /* Remove absolute positioning from images on mobile */
+		width: 3rem !important; /* Override inline width */
+		height: 3rem !important; /* Override inline height */
+		margin-bottom: 0.5rem; /* Add some spacing if stacked */
+		/* right values are removed by static position */
 	}
-	.member-images-cluster .member-thumbnail:nth-child(1) {
-		right: 40px; /* Adjusted overlap for smaller images */
-	}
-	.member-images-cluster .member-thumbnail:nth-child(2) {
-		right: 20px;
-	}
-	.member-images-cluster .member-thumbnail:nth-child(3) {
-		right: 0px;
+	/* If you still want an overlap, position them differently for mobile, e.g., using negative margins */
+	/* This will stack them neatly if position:static */
+
+	/* Target the 'activities' div (which contains the button) */
+	.Members > div[style*="position: relative"] .activities {
+		position: static !important; /* Remove absolute positioning on mobile */
+		width: auto !important; /* Let content determine width */
+		margin: 0 auto 1rem auto !important; /* Center and add bottom margin */
 	}
 
+	/* Target the button itself inside the 'activities' div */
+	.Members > div[style*="position: relative"] .activities button {
+		position: static !important; /* Remove absolute positioning on mobile */
+		margin-top: 0 !important; /* Reset margin */
+		margin-left: 0 !important; /* Reset margin */
+		width: auto; /* Allow width to be determined by content */
+		max-width: 80%; /* Prevent button from getting too wide */
+		font-size: 0.75rem; /* Make button text slightly larger for readability */
+		padding: 0.5rem 1rem; /* Adjust padding */
+	}
+
+	/* Creator Info - for fixed bottom-right */
 	.creator-info {
 		padding: 8px; /* Reduced padding for creator info */
 		font-size: 0.65rem; /* Even smaller font on tiny screens */
+		background-color: rgba(240, 244, 248, 0.95); /* Slightly less transparent */
+		border-top-left-radius: 4px; /* Smaller radius */
+		width: auto; /* Allow width to adjust */
+		max-width: 70%; /* Limit its width on small screens */
+	}
+	.creator-info p {
+		font-size: 0.65rem; /* Explicitly set font size for paragraph */
 	}
 }
 
@@ -125,11 +176,57 @@ body {
 @media (min-width: 640px) and (max-width: 1023px) {
 	.poster-container {
 		padding: 2rem; /* Medium padding */
+		width: 90%; /* Take up more width on tablets */
 	}
 
 	.icon-section img {
 		width: 6rem; /* Medium logos */
 		height: 6rem;
+	}
+
+	/* Adjust member image and button positioning for tablets, respecting original inline styles */
+	.Members > div[style*="position: relative"][style*="margin-left: auto"] {
+		width: 100% !important; /* Allow more space */
+		height: auto !important;
+		margin-right: -1rem !important; /* Adjust overall cluster position */
+		display: flex;
+		flex-direction: row; /* Keep them in a row */
+		justify-content: flex-end; /* Push to the right */
+		align-items: center;
+		padding-top: 0;
+	}
+
+	.Members > div[style*="position: relative"] img {
+		/* Reapply absolute for overlap on tablets if desired, or use flex gap */
+		position: absolute; /* Reapply for overlap */
+		width: 4rem !important; /* Adjust size for tablets */
+		height: 4rem !important;
+	}
+	.Members > div[style*="position: relative"] img:nth-child(1) {
+		right: 80px !important; /* Adjust right for overlap */
+		z-index: 1;
+	}
+	.Members > div[style*="position: relative"] img:nth-child(2) {
+		right: 40px !important;
+		z-index: 2;
+	}
+	.Members > div[style*="position: relative"] img:nth-child(3) {
+		right: 0px !important;
+		z-index: 3;
+	}
+
+	.Members > div[style*="position: relative"] .activities {
+		position: static !important; /* Allow button to flow with flex */
+		width: auto !important;
+		margin: 0 1rem 0 0 !important; /* Add right margin for spacing */
+	}
+
+	.Members > div[style*="position: relative"] .activities button {
+		position: static !important;
+		margin-top: 0 !important;
+		margin-left: 0 !important;
+		font-size: 0.85rem; /* Adjust button text size */
+		padding: 0.6rem 1.2rem;
 	}
 
 	.creator-info {
@@ -139,4 +236,5 @@ body {
 
 /* Large screens and up (laptops, desktops, TVs, >= 1024px) */
 /* No specific overrides here, as the default styles and Tailwind classes
-   for lg:max-w-4xl, xl:max-w-5xl, 2xl:max-w-6xl handle this well. */
+   for lg:max-w-4xl, xl:max-w-5xl, 2xl:max-w-6xl handle this well.
+   The inline styles in HTML will take precedence here if no !important is used. */
