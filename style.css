@@ -1,0 +1,142 @@
+/* Global Styles */
+body {
+	font-family: "Inter", sans-serif;
+	background-color: #f0f4f8; /* Light gray background for the entire page */
+	min-height: 100vh; /* Ensure body takes full viewport height */
+	margin: 0; /* Remove default body margin */
+}
+
+/* Keyframe animation for fade-in effect */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-fade-in {
+	animation: fadeIn 1s ease-out forwards;
+}
+
+/* Member Image Cluster Styles */
+.member-images-cluster {
+	position: relative;
+	width: 120px; /* Default width for the cluster container */
+	height: 48px; /* Default height for the cluster container */
+	/* Positioned by parent flex container, no absolute here */
+}
+
+.member-images-cluster .member-thumbnail {
+	position: absolute;
+	width: 3rem; /* Fixed size for images */
+	height: 3rem; /* Fixed size for images */
+	bottom: 0;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid white;
+}
+
+/* Overlapping order and position for member images */
+.member-images-cluster .member-thumbnail:nth-child(1) {
+	/* Sukanta.jpg */
+	right: 60px; /* Adjust for overlap */
+	z-index: 1;
+}
+
+.member-images-cluster .member-thumbnail:nth-child(2) {
+	/* Mukul.jpg */
+	right: 30px; /* Adjust for overlap */
+	z-index: 2;
+}
+
+.member-images-cluster .member-thumbnail:nth-child(3) {
+	/* Harshit.jpg */
+	right: 0px; /* Adjust for overlap */
+	z-index: 3;
+}
+
+/* Creator Info Styles */
+.creator-info {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	text-align: right;
+	padding: 10px;
+	background-color: rgba(240, 244, 248, 0.85);
+	border-top: 1px solid rgba(224, 224, 224, 0.8);
+	border-left: 1px solid rgba(224, 224, 224, 0.8);
+	border-top-left-radius: 8px;
+	font-size: 0.75rem; /* Small font size */
+	color: #333;
+	z-index: 1000;
+}
+
+.creator-info p a {
+	color: #0077b5; /* LinkedIn blue */
+	text-decoration: none;
+	font-weight: bold;
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+/* Extra Small screens (e.g., small mobile phones, < 640px) */
+@media (max-width: 639px) {
+	.poster-container {
+		padding: 1rem; /* Reduced padding for smaller screens */
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.icon-section img {
+		width: 4rem; /* Smaller logos on mobile */
+		height: 4rem;
+	}
+
+	.member-images-cluster {
+		width: 90px; /* Make image cluster container smaller */
+		height: 40px;
+	}
+
+	.member-images-cluster .member-thumbnail {
+		width: 2.5rem; /* Smaller member images */
+		height: 2.5rem;
+	}
+	.member-images-cluster .member-thumbnail:nth-child(1) {
+		right: 40px; /* Adjusted overlap for smaller images */
+	}
+	.member-images-cluster .member-thumbnail:nth-child(2) {
+		right: 20px;
+	}
+	.member-images-cluster .member-thumbnail:nth-child(3) {
+		right: 0px;
+	}
+
+	.creator-info {
+		padding: 8px; /* Reduced padding for creator info */
+		font-size: 0.65rem; /* Even smaller font on tiny screens */
+	}
+}
+
+/* Medium screens (e.g., tablets, 640px to 1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+	.poster-container {
+		padding: 2rem; /* Medium padding */
+	}
+
+	.icon-section img {
+		width: 6rem; /* Medium logos */
+		height: 6rem;
+	}
+
+	.creator-info {
+		font-size: 0.7rem; /* Slightly larger font than mobile */
+	}
+}
+
+/* Large screens and up (laptops, desktops, TVs, >= 1024px) */
+/* No specific overrides here, as the default styles and Tailwind classes
+   for lg:max-w-4xl, xl:max-w-5xl, 2xl:max-w-6xl handle this well. */
